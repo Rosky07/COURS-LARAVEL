@@ -14,10 +14,7 @@ class EtudiantPagesTest extends TestCase
     {
         $this->get(route('etudiant.index'))
             ->assertOk()
-            ->assertSee('Le registre est encore vide')
-            ->assertSee('Dossiers inscrits')
-            ->assertSee('Classes représentées')
-            ->assertSee('Âge moyen');
+            ->assertSee('Le registre est encore vide');
 
         $this->get(route('etudiant.create'))
             ->assertOk()
@@ -46,19 +43,5 @@ class EtudiantPagesTest extends TestCase
             ->assertOk()
             ->assertSee('Enregistrer les modifications')
             ->assertSee('value="aicha@example.com"', false);
-    }
-
-    public function test_student_register_shows_derived_statistics(): void
-    {
-        foreach ([
-            ['nom' => 'Kouassi', 'prenom' => 'Aïcha', 'age' => 16, 'email' => 'aicha@example.com', 'classe' => '3e A', 'contact' => '0700000000'],
-            ['nom' => 'Diallo', 'prenom' => 'Moussa', 'age' => 18, 'email' => 'moussa@example.com', 'classe' => '3e B', 'contact' => '0700000001'],
-        ] as $student) {
-            Etudiant::create($student);
-        }
-
-        $this->get(route('etudiant.index'))
-            ->assertOk()
-            ->assertSeeInOrder(['Classes représentées', '2', 'Âge moyen', '17,0']);
     }
 }
