@@ -1,9 +1,154 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source "../views";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+    --font-display: "Fraunces", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+    --color-ink: #14251d;
+    --color-paper: #f5f3ec;
+    --color-signal: #f49a38;
+    --color-leaf: #31805d;
+    --color-mist: #e8eee8;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        min-width: 320px;
+        background: var(--color-paper);
+        color: var(--color-ink);
+    }
+
+    ::selection {
+        background: var(--color-signal);
+        color: var(--color-ink);
+    }
+}
+
+.site-footer {
+    isolation: isolate;
+}
+
+.site-footer::before {
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    content: "";
+    inset: 0;
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.link-slide {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px
+        no-repeat;
+    padding-bottom: 2px;
+    transition:
+        background-size 0.3s ease,
+        color 0.2s ease;
+}
+
+.link-slide:hover,
+.link-slide:focus-visible {
+    background-size: 100% 1px;
+}
+
+.footer-wordmark {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 7.2vw, 7rem);
+    font-weight: 500;
+    line-height: 0.9;
+    white-space: nowrap;
+    background: linear-gradient(to bottom, rgb(255 255 255 / 0.16), transparent 85%);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    user-select: none;
+}
+
+.field-control {
+    width: 100%;
+    min-height: 3.25rem;
+    border: 1px solid #d8ded7;
+    border-radius: 0.875rem;
+    background: #fff;
+    padding: 0.75rem 1rem;
+    color: var(--color-ink);
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.field-control::placeholder {
+    color: #929b93;
+}
+
+.field-control:focus {
+    border-color: var(--color-leaf);
+    outline: 2px solid transparent;
+    box-shadow: 0 0 0 3px rgb(49 128 93 / 0.14);
+}
+
+.field-control[aria-invalid="true"] {
+    border-color: #dc6b63;
+}
+
+.index-enter {
+    animation: index-fade-up 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.index-stat {
+    animation: index-fade-up 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.index-stat:nth-child(2) {
+    animation-delay: 0.08s;
+}
+
+.index-stat:nth-child(3) {
+    animation-delay: 0.16s;
+}
+
+.index-stat:hover {
+    transform: translateY(-3px);
+    border-color: rgb(49 128 93 / 0.2);
+    box-shadow: 0 12px 28px rgb(20 37 29 / 0.07);
+}
+
+@keyframes index-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
 }
